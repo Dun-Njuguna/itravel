@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppText extends StatelessWidget {
-  double fontSize;
+  final double fontSize;
   final String text;
   final Color color;
-  FontWeight fontWeight;
+  final FontWeight fontWeight;
 
-  AppText(
+  const AppText(
       {Key? key,
       required this.text,
       this.color = Colors.black,
