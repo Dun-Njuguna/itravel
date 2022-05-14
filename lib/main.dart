@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:itravel/models/state/app_state_manager.dart';
-import 'package:itravel/models/state/navigation/app_router.dart';
+import 'package:itravel/app_theme.dart';
 import 'package:provider/provider.dart';
+
+import 'pages/state/app_state_manager.dart';
+import 'pages/state/navigation/app_router.dart';
+import 'pages/state/profile_manager.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,8 +18,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  //Create AppStateManager
+  //State managers
   final _appStateManager = AppStateManager();
+  final _profileManager = ProfileManager();
 
   //AppRouter
   late AppRouter _appRouter;
@@ -24,8 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     _appRouter = AppRouter(
-      appStateManager: _appStateManager,
-    );
+        appStateManager: _appStateManager, profileManager: _profileManager);
     super.initState();
   }
 
@@ -36,16 +39,27 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => _appStateManager,
         ),
+        ChangeNotifierProvider(
+          create: (context) => _profileManager,
+        ),
       ],
-      child: MaterialApp(
-        title: 'iTravel',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Router(
-          routerDelegate: _appRouter,
-          backButtonDispatcher: RootBackButtonDispatcher(),
-        ),
+      child: Consumer<ProfileManager>(
+        builder: (context, profileManager, child) {
+          ThemeData appTheme;
+          if (profileManager.darkMode) {
+            appTheme = AppTheme.dark();
+          } else {
+            appTheme = AppTheme.light();
+          }
+          return MaterialApp(
+            title: 'iTravel',
+            theme: appTheme,
+            home: Router(
+              routerDelegate: _appRouter,
+              backButtonDispatcher: RootBackButtonDispatcher(),
+            ),
+          );
+        },
       ),
     );
   }

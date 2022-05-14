@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:itravel/models/state/app_state_manager.dart';
-import 'package:itravel/models/state/navigation/itravel_pages.dart';
 import 'package:itravel/utils/app_colors.dart';
 import 'package:itravel/widgets/app_text.dart';
 import 'package:itravel/models/sliders.dart';
 import 'package:itravel/widgets/responsive_button.dart';
 import 'package:provider/provider.dart';
+
+import 'state/app_state_manager.dart';
+import 'state/navigation/itravel_pages.dart';
 
 class WelcomePage extends StatefulWidget {
   //MaterialPage Helper

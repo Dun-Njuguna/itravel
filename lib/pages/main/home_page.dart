@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:itravel/models/state/app_state_manager.dart';
-import 'package:itravel/models/state/navigation/itravel_pages.dart';
 import 'package:itravel/pages/main/discover_page.dart';
 import 'package:itravel/pages/main/near_me_page.dart';
 import 'package:itravel/pages/main/profile_page.dart';
+import 'package:itravel/pages/state/app_state_manager.dart';
+import 'package:itravel/pages/state/navigation/itravel_pages.dart';
 import 'package:itravel/utils/constants.dart';
 import 'package:provider/provider.dart';
 
