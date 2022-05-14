@@ -1,12 +1,22 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:itravel/models/state/app_state_manager.dart';
+import 'package:itravel/models/state/navigation/itravel_pages.dart';
 import 'package:itravel/utils/app_colors.dart';
 import 'package:itravel/widgets/app_text.dart';
 import 'package:itravel/models/sliders.dart';
 import 'package:itravel/widgets/responsive_button.dart';
+import 'package:provider/provider.dart';
 
 class WelcomePage extends StatefulWidget {
+  //MaterialPage Helper
+  static MaterialPage page() {
+    return MaterialPage(
+      name: ItravelPages.onboardingPath,
+      key: ValueKey(ItravelPages.onboardingPath),
+      child: const WelcomePage(),
+    );
+  }
+
   const WelcomePage({Key? key}) : super(key: key);
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -16,12 +26,12 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: welcomeCarousel(),
+      body: welcomeCarousel(context),
     );
   }
 }
 
-PageView welcomeCarousel() {
+PageView welcomeCarousel(BuildContext context) {
   return PageView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: sliders.length,
@@ -34,12 +44,12 @@ PageView welcomeCarousel() {
                 image: AssetImage(sliders[index].sliderImage),
                 fit: BoxFit.fill),
           ),
-          child: carouselContent(index),
+          child: carouselContent(index, context),
         );
       });
 }
 
-Container carouselContent(int index) {
+Container carouselContent(int index, BuildContext context) {
   return Container(
     margin: const EdgeInsets.only(top: 130, left: 20, right: 20, bottom: 50),
     child: Column(
@@ -47,7 +57,7 @@ Container carouselContent(int index) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         slideDescription(index),
-        slideNavigation(index),
+        slideNavigation(index, context),
       ],
     ),
   );
@@ -83,7 +93,7 @@ Column slideDescription(int index) {
   );
 }
 
-Column slideNavigation(int index) {
+Column slideNavigation(int index, BuildContext context) {
   return Column(
     children: [
       pageIndicator(index),
@@ -98,13 +108,18 @@ Column slideNavigation(int index) {
               ResponsiveButton(
                 width: 110,
                 title: "Next",
-                onPressed: () => onNextClicked(),
+                onPressed: () => {
+                  // Todo implement on next clicked
+                },
               ),
               ResponsiveButton(
                 width: 110,
                 title: "Skip",
                 color: AppColors.minColor.withOpacity(0.1),
-                onPressed: () => onSkipClicked(),
+                onPressed: () {
+                  Provider.of<AppStateManager>(context, listen: false)
+                      .completeOnboarding();
+                },
               ),
             ],
           )),
@@ -130,12 +145,4 @@ Row pageIndicator(int index) {
       ),
     ),
   );
-}
-
-
-onSkipClicked() {
-}
-
-onNextClicked() {
-
 }
