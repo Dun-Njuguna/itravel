@@ -1,7 +1,8 @@
 class ItravelPages {
-  static String onboardingPath = '/onboarding';
-  static String home = '/';
-  static String nearMePath = '/nearme';
-  static String discoverPath = '/discover';
-  static String profilePath = '/profile';
+  // constants for each URL path
+  static const String onboardingPath = '/onboarding';
+  static const String home = '/home';
+  static const String nearMePath = '/nearme';
+  static const String discoverPath = '/discover';
+  static const String profilePath = '/profile';
 }

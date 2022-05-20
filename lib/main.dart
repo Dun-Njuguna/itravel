@@ -3,6 +3,7 @@ import 'package:itravel/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/state/app_state_manager.dart';
+import 'pages/state/navigation/app_route_parser.dart';
 import 'pages/state/navigation/app_router.dart';
 import 'pages/state/profile_manager.dart';
 
@@ -25,10 +26,15 @@ class _MyAppState extends State<MyApp> {
   //AppRouter
   late AppRouter _appRouter;
 
+    // Initialize RouteInformationParser
+  final routeParser = AppRouteParser();
+
   @override
   void initState() {
     _appRouter = AppRouter(
-        appStateManager: _appStateManager, profileManager: _profileManager);
+      appStateManager: _appStateManager,
+      profileManager: _profileManager,
+    );
     super.initState();
   }
 
@@ -51,14 +57,23 @@ class _MyAppState extends State<MyApp> {
           } else {
             appTheme = AppTheme.light();
           }
-          return MaterialApp(
-            title: 'iTravel',
+          return MaterialApp.router(
             theme: appTheme,
-            home: Router(
-              routerDelegate: _appRouter,
-              backButtonDispatcher: RootBackButtonDispatcher(),
-            ),
+            title: 'iTravel',
+            backButtonDispatcher: RootBackButtonDispatcher(),
+            routeInformationParser: routeParser,
+            routerDelegate: _appRouter,
           );
+
+          // return MaterialApp(
+          //   title: 'iTravel',
+          //   theme: appTheme,
+          //   home: Router(
+          //     routerDelegate: _appRouter,
+          //     backButtonDispatcher: RootBackButtonDispatcher(),
+          //   ),
+          // );
+          
         },
       ),
     );
